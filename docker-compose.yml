@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+    restart: always
+    ports:
+      - 8005:8005
+    expose:
+      - 8005
+    command: bash -c "python main.py migrate && python main.py runserver 0.0.0.0:8005"
