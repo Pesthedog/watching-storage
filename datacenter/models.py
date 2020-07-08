@@ -42,32 +42,16 @@ class Visit(models.Model):
             timedelta = leaved_at - entered_at
             spent_minutes = timedelta.total_seconds() // 60
 
-            if spent_minutes >= minutes:
-                return True
-            else:
-                return False
-
+            return spent_minutes >= minutes
         else:
-            if duration.total_seconds() // 60 >= minutes:
-                return True
-            else:
-                return False
+            return duration.total_seconds() // 60 >= minutes
 
 
 def format_duration(duration):
-    s = duration.total_seconds()
-    hours = int(s // 3600)
-    s = s - hours * 3600
-    minutes = int(s // 60)
-    seconds = int(s - minutes * 60)
+    total_seconds = duration.total_seconds()
+    hours = int(total_seconds // 3600)
+    total_seconds = total_seconds - hours * 3600
+    minutes = int(total_seconds // 60)
+    seconds = int(total_seconds - minutes * 60)
 
-    if hours < 10:
-        hours = "0" + str(hours)
-
-    if minutes < 10:
-        minutes = "0" + str(minutes)
-
-    if seconds < 10:
-        seconds = "0" + str(seconds)
-
-    return f"{hours}:{minutes}:{seconds}"
+    return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
